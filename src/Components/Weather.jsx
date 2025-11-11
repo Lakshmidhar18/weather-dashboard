@@ -24,12 +24,13 @@ function Weather() {
     }
   };
 
+  //destructuring the data to the api
   const { temp, conditions, humidity, windspeed, winddir, precip, uvindex, sunrise, sunset } =
     weather.currentConditions || {};
 
   const fahrenheit = temp ? (temp * 9) / 5 + 32 : null;
 
-  // 🔄 Convert degrees to compass direction (e.g., NE, SW)
+ 
   const getWindDirection = (degree) => {
     const directions = [
       "N",
@@ -52,9 +53,23 @@ function Weather() {
     const index = Math.round((degree % 360) / 22.5);
     return directions[index % 16];
   };
+ // chnaging theme based on weather condition
+  const getWeatherTheme = (condition) => {
+    if (!condition) return "default-bg";
+    const c = condition.toLowerCase();
+    if (c.includes("clear") || c.includes("sunny")) return "sunny-bg";
+    if (c.includes("rain")) return "rainy-bg";
+    if (c.includes("cloud")) return "cloudy-bg";
+    if (c.includes("snow")) return "snowy-bg";
+    if (c.includes("thunder") || c.includes("storm")) return "stormy-bg";
+    if (c.includes("fog") || c.includes("mist")) return "foggy-bg";
+    return "default-bg";
+  };
+
+  const themeClass = getWeatherTheme(conditions);
 
   return (
-    <div className="Container">
+    <div className={`Container ${themeClass}`}>
       <div className="search-bar">
         <input
           type="text"
