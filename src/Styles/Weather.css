@@ -1,4 +1,4 @@
-/* Page layout */
+/* === Page Layout === */
 .Container {
   min-height: 100vh;
   width: 100%;
@@ -6,19 +6,19 @@
   font-family: "Poppins", sans-serif;
 
   display: flex;
-  flex-direction: column; /* stack vertically */
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* start from top */
-  padding-top: 40px; /* space from top edge */
+  justify-content: flex-start;
+  padding: 40px 20px;
   box-sizing: border-box;
 }
 
-/* Search bar */
+/* === Search Bar === */
 .search-bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   max-width: 500px;
   gap: 10px;
   background: rgba(255, 255, 255, 0.3);
@@ -26,10 +26,10 @@
   border-radius: 30px;
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px; /* pushes weather info below */
+  margin-bottom: 40px;
 }
 
-/* Input styling */
+/* Input Styling */
 .search-bar input {
   flex: 1;
   padding: 12px 20px;
@@ -45,7 +45,7 @@
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
-/* Button styling */
+/* Button Styling */
 .search-bar button {
   padding: 12px 25px;
   border: none;
@@ -63,24 +63,232 @@
   background: linear-gradient(135deg, #00c6ff, #007bff);
 }
 
-/* Weather info below */
+/* === Weather Info Section === */
 .container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   width: 100%;
   color: #333;
 }
-.search-data{
-    
+
+/* Card for Weather Data */
+.weather-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 500px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.35);
+  padding: 25px 30px;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.weather-data h1 {
+  font-size: 24px;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.weather-data h4 {
+  margin-top: 10px;
+  color: #007bff;
+}
+
+.weather-data p {
+  font-size: 16px;
+  margin: 2px 0;
+}
+/* === Weather Dashboard Grid === */
+.weather-dashboard {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  color: #222;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.city-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: #004aad;
+  margin-bottom: 5px;
+}
+
+.weather-summary {
+  font-size: 16px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* === Enhanced Grid Layout: one large box + smaller ones === */
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* Make one box larger */
+.weather-box.condition {
+  grid-column: span 2; /* spans across 2 columns */
+  grid-row: span 1;
+  background: linear-gradient(135deg, #ffe082, #ffd54f);
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional: subtle animation for the main box */
+.weather-box.condition:hover {
+  transform: scale(1.02);
+}
+
+/* Adjust text styling for the large box */
+.weather-box.condition p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.weather-box.condition h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  margin-top: 8px;
+}
+
+/* Smaller boxes (all others) */
+.weather-box {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  padding: 20px 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.weather-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive: on small screens, the large box becomes full-width */
+@media (max-width: 768px) {
+  .weather-box.condition {
+    grid-column: span 1;
+  }
+}
+
+.weather-box p {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.weather-box h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Specific colors for visual cues */
+/* === Professional, cohesive gradient palette === */
+.condition {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  color: #fff;
+}
+.temp-c {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: #fff;
+}
+.temp-f {
+  background: linear-gradient(135deg, #fab1a0, #e17055);
+  color: #fff;
+}
+.humidity {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: #fff;
+}
+.rain {
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+  color: #fff;
+}
+.uv {
+  background: linear-gradient(135deg, #fdcb6e, #e17055);
+  color: #fff;
+}
+.air {
+  background: linear-gradient(135deg, #55efc4, #00b894);
+  color: #fff;
+}
+.sunrise {
+  background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+  color: #333;
+}
+.sunset {
+  background: linear-gradient(135deg, #ff7675, #d63031);
+  color: #fff;
+}
+.wind-speed {
+  background: linear-gradient(135deg, #74b9ff, #81ecec);
+  color: #fff;
+}
+.wind-dir {
+  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+  color: #fff;
+}
+
+/* Add subtle card shadow for depth */
+.weather-box {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.weather-box:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 
 
+@media (max-width: 768px) {
+  .weather-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}
 
+/* === Responsive Design === */
+@media (max-width: 600px) {
+  .search-bar {
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 20px;
+  }
 
+  .search-bar input,
+  .search-bar button {
+    width: 100%;
+  }
 
+  .weather-data {
+    max-width: 90%;
+    padding: 20px;
+  }
 
-
-
-
-
-
+  .weather-data h1 {
+    font-size: 20px;
+  }
+}
