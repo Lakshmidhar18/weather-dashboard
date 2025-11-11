@@ -12,34 +12,58 @@
   box-sizing: border-box;
   transition: background 1s ease-in-out;
 }
-/*dynamic background color */
-.default-bg {
+/*dynamic background color change dashboard */
+
+.weather-dashboard {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  color: #222;
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
+  border-radius: 20px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+  transition: background 0.8s ease, box-shadow 0.5s ease;
+
+}
+/* Clear / Sunny */
+.dashboard-clear {
+  background: linear-gradient(135deg, rgba(255, 238, 176, 0.85), rgba(255, 186, 68, 0.85));
+  box-shadow: 0 8px 25px rgba(255, 180, 80, 0.3);
 }
 
-.sunny-bg {
-  background: linear-gradient(135deg, #fce38a, #e28f8f);
+/*  Cloudy */
+.dashboard-cloudy {
+  background: linear-gradient(135deg, rgba(163, 199, 232, 0.85), rgba(177, 208, 255, 0.85));
+  box-shadow: 0 8px 25px rgba(100, 120, 150, 0.3);
 }
 
-.cloudy-bg {
-  background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+/*  Rainy */
+.dashboard-rain {
+  background: linear-gradient(135deg, rgba(191, 223, 255, 0.618), rgba(34, 133, 255, 0.85));
+  box-shadow: 0 8px 25px rgba(120, 181, 255, 0.3);
 }
 
-.rainy-bg {
-  background: linear-gradient(135deg, #5f72bd, #dfbef6);
+/* Storm */
+.dashboard-storm {
+  background: linear-gradient(135deg, rgba(100, 80, 150, 0.9), rgba(60, 50, 100, 0.9));
+  box-shadow: 0 8px 25px rgba(80, 70, 130, 0.4);
 }
 
-.stormy-bg {
-  background: linear-gradient(135deg, #232526, #414345);
+/* Snow */
+.dashboard-snow {
+   background: linear-gradient(135deg, rgba(220, 240, 255, 0.85), rgba(190, 223, 255, 0.85));
+  box-shadow: 0 8px 25px rgba(180, 200, 230, 0.3);
 }
 
-.snowy-bg {
-  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+/* Fog */
+.dashboard-fog {
+  background: linear-gradient(135deg, rgba(232, 232, 232, 0.8), rgba(161, 161, 161, 0.8));
+  box-shadow: 0 8px 25px rgba(120, 120, 120, 0.3);
 }
 
-.foggy-bg {
-  background: linear-gradient(135deg, #757f9a, #d7dde8);
-}
 
 
 
@@ -134,17 +158,7 @@
   margin: 2px 0;
 }
 /* === Weather Dashboard Grid === */
-.weather-dashboard {
-  width: 100%;
-  max-width: 900px;
-  text-align: center;
-  color: #222;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  padding: 25px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
+
 
 .city-name {
   font-size: 28px;
@@ -170,13 +184,13 @@
 .weather-box.condition {
   grid-column: span 2; /* spans across 2 columns */
   grid-row: span 1;
-  background: linear-gradient(135deg, #ffe082, #ffd54f);
+background: rgba(255, 255, 255, 0.25);
   font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px 20px;
+   backdrop-filter: blur(10px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -231,47 +245,69 @@
 }
 
 .condition {
-  background: linear-gradient(135deg, #74b9ff, #0984e3);
+   background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .temp-c {
-  background: linear-gradient(135deg, #00b894, #00cec9);
+   background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .temp-f {
-  background: linear-gradient(135deg, #fab1a0, #e17055);
+   background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .humidity {
-  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+ background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .rain {
-  background: linear-gradient(135deg, #0984e3, #74b9ff);
+   background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .uv {
-  background: linear-gradient(135deg, #fdcb6e, #e17055);
+  background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .air {
-  background: linear-gradient(135deg, #55efc4, #00b894);
-  color: #fff;
+ background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  color: #fff;;
 }
 .sunrise {
-  background: linear-gradient(135deg, #ffeaa7, #fab1a0);
-  color: #333;
+   background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  color: #fff;
 }
 .sunset {
-  background: linear-gradient(135deg, #ff7675, #d63031);
+  background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .wind-speed {
-  background: linear-gradient(135deg, #74b9ff, #81ecec);
+  background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 .wind-dir {
-  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+  background: rgba(255, 255, 255, 0.25);
+     backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   color: #fff;
 }
 

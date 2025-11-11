@@ -66,6 +66,41 @@ function Weather() {
     return "default-bg";
   };
 
+
+ const getDashboardClass = (condition) => {
+    if (!condition) return "dashboard-clear";
+    const c = condition.toLowerCase();
+    if (c.includes("rain")) return "dashboard-rain";
+    if (c.includes("cloud")) return "dashboard-cloudy";
+    if (c.includes("storm") || c.includes("thunder")) return "dashboard-storm";
+    if (c.includes("snow")) return "dashboard-snow";
+    if (c.includes("fog") || c.includes("mist")) return "dashboard-fog";
+    return "dashboard-clear";
+  };
+
+//changing the dynamicaly icons based weather condition
+const getWeatherEmoji = (condition) => {
+  if (!condition) return "🌤️"; // default
+
+  const lower = condition.toLowerCase();
+
+  if (lower.includes("clear") || lower.includes("sun")) return "☀️";
+  if (lower.includes("cloud")) return "☁️";
+  if (lower.includes("rain")) return "🌧️";
+  if (lower.includes("storm") || lower.includes("thunder")) return "🌩️";
+  if (lower.includes("snow")) return "❄️";
+  if (lower.includes("fog") || lower.includes("mist") || lower.includes("haze")) return "🌫️";
+  if (lower.includes("wind")) return "🌬️";
+
+  return "🌤️"; // fallback
+};
+
+//dynamic dashboard background change
+ const dashboardClass = getDashboardClass(conditions);
+
+
+
+
   const themeClass = getWeatherTheme(conditions);
 
   return (
@@ -81,14 +116,14 @@ function Weather() {
       </div>
 
       {weather.resolvedAddress && (
-        <div className="weather-dashboard">
+        <div className={`weather-dashboard ${dashboardClass}`}>
           <h2 className="city-name">{weather.resolvedAddress}</h2>
           <p className="weather-summary">{weather.description}</p>
 
           <div className="weather-grid">
             <div className="weather-box condition">
-              <p>🌤️ Condition</p>
-              <h3>{conditions}</h3>
+              <p>{getWeatherEmoji(weather.currentConditions.conditions)} Condition</p>
+           <h3>{weather.currentConditions.conditions}</h3>
             </div>
 
             <div className="weather-box temp-c">
