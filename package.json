@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "react": "^19.2.0",
+    "react-card-flip": "^1.2.3",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {

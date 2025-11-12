@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../src/Styles/Weather.css";
+import Predicted from "./Predicted";
 
 function Weather() {
   const [location, setLocation] = useState("");
   const [weather, setWeather] = useState({});
+  const [lat, Setlat] = useState(null);
+  const [long, Setlong] = useState(null);
   const apiKey = import.meta.env.VITE_API_KEY;
 
   const fetchWeather = async () => {
@@ -17,43 +20,27 @@ function Weather() {
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${apiKey}&contentType=json`
       );
       const data = await response.json();
-      console.log("API data:", data);
+      console.log("API data call from search");
       setWeather(data);
     } catch (error) {
       console.error("Error fetching weather:", error);
     }
   };
 
-  //destructuring the data to the api
   const { temp, conditions, humidity, windspeed, winddir, precip, uvindex, sunrise, sunset } =
     weather.currentConditions || {};
 
   const fahrenheit = temp ? (temp * 9) / 5 + 32 : null;
 
- 
   const getWindDirection = (degree) => {
     const directions = [
-      "N",
-      "NNE",
-      "NE",
-      "ENE",
-      "E",
-      "ESE",
-      "SE",
-      "SSE",
-      "S",
-      "SSW",
-      "SW",
-      "WSW",
-      "W",
-      "WNW",
-      "NW",
-      "NNW",
+      "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+      "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
     ];
     const index = Math.round((degree % 360) / 22.5);
     return directions[index % 16];
   };
- // chnaging theme based on weather condition
+
   const getWeatherTheme = (condition) => {
     if (!condition) return "default-bg";
     const c = condition.toLowerCase();
@@ -66,8 +53,50 @@ function Weather() {
     return "default-bg";
   };
 
+  const getUserLocation = async () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser.");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
- const getDashboardClass = (condition) => {
+        alert(`Latitude:${latitude}, Longitude:${longitude}`);
+        Setlat(latitude);
+        Setlong(longitude);
+        fetchUserlocation(latitude, longitude);
+      },
+      (error) => {
+        console.log("Error Message", error);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
+  };
+
+  const fetchUserlocation = async (latitude, longitude) => {
+    try {
+      const userLoaction = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?key=${apiKey}`
+      );
+      const response = await userLoaction.json();
+      setWeather(response);
+      console.log("api call from userlocation");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
+  }, []);
+
+  const getDashboardClass = (condition) => {
     if (!condition) return "dashboard-clear";
     const c = condition.toLowerCase();
     if (c.includes("rain")) return "dashboard-rain";
@@ -78,33 +107,51 @@ function Weather() {
     return "dashboard-clear";
   };
 
-//changing the dynamicaly icons based weather condition
-const getWeatherEmoji = (condition) => {
-  if (!condition) return "🌤️"; // default
+  const getWeatherEmoji = (condition) => {
+    if (!condition) return "🌤️";
+    const lower = condition.toLowerCase();
+    if (lower.includes("clear") || lower.includes("sun")) return "☀️";
+    if (lower.includes("cloud")) return "☁️";
+    if (lower.includes("rain")) return "🌧️";
+    if (lower.includes("storm") || lower.includes("thunder")) return "🌩️";
+    if (lower.includes("snow")) return "❄️";
+    if (lower.includes("fog") || lower.includes("mist") || lower.includes("haze")) return "🌫️";
+    if (lower.includes("wind")) return "🌬️";
+    return "🌤️";
+  };
 
-  const lower = condition.toLowerCase();
-
-  if (lower.includes("clear") || lower.includes("sun")) return "☀️";
-  if (lower.includes("cloud")) return "☁️";
-  if (lower.includes("rain")) return "🌧️";
-  if (lower.includes("storm") || lower.includes("thunder")) return "🌩️";
-  if (lower.includes("snow")) return "❄️";
-  if (lower.includes("fog") || lower.includes("mist") || lower.includes("haze")) return "🌫️";
-  if (lower.includes("wind")) return "🌬️";
-
-  return "🌤️"; // fallback
-};
-
-//dynamic dashboard background change
- const dashboardClass = getDashboardClass(conditions);
-
-
-
-
+  const dashboardClass = getDashboardClass(conditions);
   const themeClass = getWeatherTheme(conditions);
 
+  // NEW: Background video logic
+  const getVideoSrc = (condition) => {
+    if (!condition) return "/videos/default.mp4";
+    const c = condition.toLowerCase();
+    if (c.includes("clear") || c.includes("sun")) return "/videos/Sunny.mp4";
+    if (c.includes("rain")) return "/videos/Rain.mp4";
+    if (c.includes("cloud")) return "/videos/Cloudy.mp4";
+    if (c.includes("snow")) return "/videos/Snow.mp4";
+    if (c.includes("thunder") || c.includes("storm")) return "/videos/Thunder.mp4";
+    if (c.includes("fog") || c.includes("mist")) return "/videos/Foggy.mp4";
+    return "/videos/Clear.mp4";
+  };
+
+  const videoSrc = getVideoSrc(conditions);
+
   return (
-    <div className={`Container ${themeClass}`}>
+    <div className={`Container ${themeClass}`} style={{ position: "relative", overflow: "hidden" }}>
+  {/*  Full-screen Background Video */}
+  <video
+    key={videoSrc}
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="weather-video-bg"
+  >
+    <source src={videoSrc} type="video/mp4" />
+  </video>
+
       <div className="search-bar">
         <input
           type="text"
@@ -117,13 +164,16 @@ const getWeatherEmoji = (condition) => {
 
       {weather.resolvedAddress && (
         <div className={`weather-dashboard ${dashboardClass}`}>
+   
+
+
           <h2 className="city-name">{weather.resolvedAddress}</h2>
           <p className="weather-summary">{weather.description}</p>
 
           <div className="weather-grid">
             <div className="weather-box condition">
               <p>{getWeatherEmoji(weather.currentConditions.conditions)} Condition</p>
-           <h3>{weather.currentConditions.conditions}</h3>
+              <h3>{weather.currentConditions.conditions}</h3>
             </div>
 
             <div className="weather-box temp-c">
@@ -175,8 +225,13 @@ const getWeatherEmoji = (condition) => {
               <p>🌇 Sunset</p>
               <h3>{sunset}</h3>
             </div>
+                  
           </div>
+          
         </div>
+      )}
+      {weather.days && (
+      <Predicted days={weather.days}/>
       )}
     </div>
   );
