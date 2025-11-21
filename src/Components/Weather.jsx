@@ -52,6 +52,9 @@ function Weather() {
     if (c.includes("fog") || c.includes("mist")) return "foggy-bg";
     return "default-bg";
   };
+  const { days = [] } = weather;
+const today = days[0] || {}; 
+const { hours = [] } = today;   
 
   const getUserLocation = async () => {
     if (!navigator.geolocation) {
@@ -224,12 +227,30 @@ function Weather() {
             <div className="weather-box sunset">
               <p>🌇 Sunset</p>
               <h3>{sunset}</h3>
+              
             </div>
                   
           </div>
-          
+
+          <div className="hourly-section">
+            <h2>Hourly Forecast</h2>
+
+            <div className="hourly-container">
+              {hours.slice(0, 12).map((hour, index) => (
+                <div key={index} className="hour-card">
+                  <h4>{hour.datetime}</h4>
+                  <p>{hour.conditions}</p>
+                  <p>🌡️ {hour.temp}°C</p>
+                  <p>💧 {hour.precipprob}%</p>
+                  <p>💨 {hour.windspeed} km/h</p>
+                </div>
+              ))}
+            </div>
+          </div>
+    
         </div>
       )}
+
       {weather.days && (
       <Predicted days={weather.days}/>
       )}

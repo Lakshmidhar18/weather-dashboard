@@ -277,6 +277,99 @@ background: rgba(255, 255, 255, 0.25);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* Hourly Forecast Section */
+.hourly-section {
+  margin-top: 35px;
+  width: 100%;
+}
+
+.hourly-section h2 {
+  text-align: left;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+
+.hourly-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 12px;
+  scroll-behavior: smooth;
+}
+
+
+.hourly-container::-webkit-scrollbar {
+  display: none;
+}
+.hourly-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.hour-card {
+  min-width: 150px;
+  max-width: 170px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 18px 14px;
+  text-align: center;
+  color: white;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.3);
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+
+  transition: all 0.3s ease;
+}
+
+.hour-card:hover {
+  transform: translateY(-6px) scale(1.05);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+
+.hour-card h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.hour-card p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+/*this is to add themes like dynamic background change */
+
+.dashboard-clear .hour-card {
+  background: rgba(255, 180, 80, 0.3);
+}
+
+.dashboard-cloudy .hour-card {
+  background: rgba(150, 190, 230, 0.3);
+}
+
+.dashboard-rain .hour-card {
+  background: rgba(34, 133, 255, 0.3);
+}
+
+.dashboard-storm .hour-card {
+  background: rgba(80, 70, 130, 0.6);
+}
+
+.dashboard-snow .hour-card {
+  background: rgba(210, 235, 255, 0.6);
+}
+
+.dashboard-fog .hour-card {
+  background: rgba(180, 180, 180, 0.5);
+}
 
 
 
