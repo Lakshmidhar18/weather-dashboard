@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../src/Styles/Weather.css";
 import Predicted from "./Predicted";
+import Loader from "./Loader";
 
 function Weather() {
   const [location, setLocation] = useState("");
@@ -8,24 +9,34 @@ function Weather() {
   const [lat, Setlat] = useState(null);
   const [long, Setlong] = useState(null);
   const apiKey = import.meta.env.VITE_API_KEY;
+  const[Loading,setLoading]=useState(true)
 
-  const fetchWeather = async () => {
-    if (!location.trim()) {
-      alert("Please enter a location!");
-      return;
-    }
 
+const fetchWeather = () => {
+  if (!location.trim()) {
+    alert("Please enter a location!");
+    return;
+  }
+
+  setLoading(true);   
+  setTimeout(async () => {
     try {
       const response = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${apiKey}&contentType=json`
       );
+
       const data = await response.json();
       console.log("API data call from search");
+
       setWeather(data);
+      setLoading(false);     
+
     } catch (error) {
       console.error("Error fetching weather:", error);
+      setLoading(false);
     }
-  };
+  }, 2000); 
+};
 
   const { temp, conditions, humidity, windspeed, winddir, precip, uvindex, sunrise, sunset } =
     weather.currentConditions || {};
@@ -67,6 +78,7 @@ const { hours = [] } = today;
         const longitude = position.coords.longitude;
 
         alert(`Latitude:${latitude}, Longitude:${longitude}`);
+        setLoading(false)
         Setlat(latitude);
         Setlong(longitude);
         fetchUserlocation(latitude, longitude);
@@ -83,15 +95,18 @@ const { hours = [] } = today;
   };
 
   const fetchUserlocation = async (latitude, longitude) => {
+    
     try {
       const userLoaction = await fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?key=${apiKey}`
       );
       const response = await userLoaction.json();
       setWeather(response);
+      setLoading(false)
       console.log("api call from userlocation");
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   };
 
@@ -153,6 +168,7 @@ const { hours = [] } = today;
     className="weather-video-bg"
   >
     <source src={videoSrc} type="video/mp4" />
+    
   </video>
 
       <div className="search-bar">
@@ -164,6 +180,8 @@ const { hours = [] } = today;
         />
         <button onClick={fetchWeather}>Search</button>
       </div>
+ {Loading  ? <Loader /> : (
+  <>
 
       {weather.resolvedAddress && (
         <div className={`weather-dashboard ${dashboardClass}`}>
@@ -254,6 +272,7 @@ const { hours = [] } = today;
       {weather.days && (
       <Predicted days={weather.days}/>
       )}
+      </>)}
     </div>
   );
 }
