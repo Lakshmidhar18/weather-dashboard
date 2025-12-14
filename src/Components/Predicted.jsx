@@ -52,8 +52,8 @@ function Predicted({ days }) {
     </div>
   </div>
 
-  <div className="front-hint">
-    Click to view 
+  <div className="front-hint h-6 mt-3 bg-dark p-2 rounded w-10 mx-auto text-light">
+    Click to Flip 
   </div>
 </div>
 
